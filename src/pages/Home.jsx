@@ -107,6 +107,7 @@ const Home = () => {
                 We offer a comprehensive range of services designed to drive your business forward.
               </p>
             </div>
+            <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 animate-slide-in-left relative overflow-hidden hover:scale-105 hover:-translate-y-2">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-600 animate-pulse-glow"></div>
                 <h3 className="text-xl font-semibold mb-3 text-blue-600">Consulting</h3>
@@ -125,6 +126,7 @@ const Home = () => {
                 <p className="text-gray-600 mb-4">24/7 technical support and maintenance to keep your systems running smoothly.</p>
                 <Link to="/services" className="text-blue-600 hover:underline transition-colors duration-300">Learn More →</Link>
               </div>
+            </div>
           </div>
         </section>
 
