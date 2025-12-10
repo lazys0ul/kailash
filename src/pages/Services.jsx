@@ -14,8 +14,28 @@ const Services = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+    
+    const revealOnScroll = () => {
+      revealElements.forEach((element) => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+    
+    return () => window.removeEventListener('scroll', revealOnScroll);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden page-transition">
       {/* Cursor Glow Effect */}
       <div 
         className="fixed w-96 h-96 rounded-full pointer-events-none z-50 transition-all duration-300 ease-out"
@@ -36,7 +56,7 @@ const Services = () => {
         </div>
 
         <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-in-left hover-tilt hover-lift">
+          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-in-left hover-tilt hover-lift reveal-left card-shimmer">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 animate-bounce-in">
               <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -58,7 +78,7 @@ const Services = () => {
             </Link>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-up animate-delay-100 hover-tilt hover-lift">
+          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-up animate-delay-100 hover-tilt hover-lift reveal card-shimmer">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 animate-bounce-in animate-delay-100">
               <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -80,7 +100,7 @@ const Services = () => {
             </Link>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-in-right hover-tilt hover-lift">
+          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-in-right hover-tilt hover-lift reveal-right card-shimmer">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 animate-bounce-in animate-delay-200">
               <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -103,7 +123,7 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="bg-blue-600 text-white rounded-lg p-8 text-center animate-fade-in animate-delay-300">
+        <div className="bg-blue-600 text-white rounded-lg p-8 text-center animate-fade-in animate-delay-300 reveal-scale">
           <h2 className="text-3xl font-bold mb-4 animate-slide-up">Ready to Transform Your Business?</h2>
           <p className="text-xl mb-6 animate-slide-up animate-delay-100">
             Let's discuss how our services can help you achieve your goals.

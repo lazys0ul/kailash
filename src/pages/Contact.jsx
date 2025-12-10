@@ -14,6 +14,26 @@ const Contact = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+    
+    const revealOnScroll = () => {
+      revealElements.forEach((element) => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+    
+    return () => window.removeEventListener('scroll', revealOnScroll);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -26,7 +46,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden page-transition">
       {/* Cursor Glow Effect */}
       <div 
         className="fixed w-96 h-96 rounded-full pointer-events-none z-50 transition-all duration-300 ease-out"
@@ -49,7 +69,7 @@ const Contact = () => {
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div className="bg-white rounded-lg shadow-md p-8 animate-slide-in-left hover-lift">
+            <div className="bg-white rounded-lg shadow-md p-8 animate-slide-in-left hover-lift reveal-left card-shimmer">
               <h2 className="text-2xl font-semibold text-gray-800 mb-6">Send us a Message</h2>
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -169,7 +189,7 @@ const Contact = () => {
 
             {/* Contact Information */}
             <div className="space-y-8 animate-slide-in-right">
-              <div className="bg-white rounded-lg shadow-md p-8 animate-fade-in animate-delay-100 hover-lift">
+              <div className="bg-white rounded-lg shadow-md p-8 animate-fade-in animate-delay-100 hover-lift reveal-right card-shimmer">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-6">Get in Touch</h2>
                 <div className="space-y-4">
                   <div className="flex items-start animate-slide-up animate-delay-200">
@@ -215,7 +235,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-8 hover-lift">
+              <div className="bg-white rounded-lg shadow-md p-8 hover-lift reveal-right card-shimmer">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Business Hours</h3>
                 <div className="space-y-2 text-gray-600">
                   <div className="flex justify-between">
