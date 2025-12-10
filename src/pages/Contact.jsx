@@ -144,7 +144,7 @@ const Contact = () => {
                 </button>
               </form>
               <p className="mt-4 text-sm text-gray-600">
-                * Required fields. Form submission will be integrated with Supabase in the future.
+                * Required fields
               </p>
             </div>
 

@@ -1,8 +1,20 @@
 {
-  "name": "kailash",
+  "name": "kailash-enterprises",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Professional business website for Kailash Enterprises",
   "type": "module",
+  "author": "lazys0ul",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lazys0ul/kailash.git"
+  },
+  "keywords": [
+    "react",
+    "vite",
+    "tailwindcss",
+    "business-website"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
