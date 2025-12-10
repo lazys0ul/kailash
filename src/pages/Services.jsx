@@ -1,10 +1,31 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Services = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      {/* Cursor Glow Effect */}
+      <div 
+        className="fixed w-96 h-96 rounded-full pointer-events-none z-50 transition-all duration-300 ease-out"
+        style={{
+          left: mousePosition.x - 192,
+          top: mousePosition.y - 192,
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
+          filter: 'blur(40px)'
+        }}
+      />
       <Navbar />
       <main className="container mx-auto px-4 py-16 animate-fade-in">
         <div className="text-center mb-16 animate-slide-up">
@@ -15,7 +36,7 @@ const Services = () => {
         </div>
 
         <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-in-left">
+          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-in-left hover-tilt hover-lift">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 animate-bounce-in">
               <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -37,7 +58,7 @@ const Services = () => {
             </Link>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-up animate-delay-100">
+          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-up animate-delay-100 hover-tilt hover-lift">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 animate-bounce-in animate-delay-100">
               <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -59,7 +80,7 @@ const Services = () => {
             </Link>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-in-right">
+          <div className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition animate-slide-in-right hover-tilt hover-lift">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-6 animate-bounce-in animate-delay-200">
               <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

@@ -1,5 +1,61 @@
 import { useState, useEffect } from 'react';
 
+const CustomCursor = () => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseOver = (e) => {
+      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
+        setIsHovering(true);
+      } else {
+        setIsHovering(false);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseover', handleMouseOver);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseover', handleMouseOver);
+    };
+  }, []);
+
+  return (
+    <>
+      <div
+        className="fixed pointer-events-none z-[9999] mix-blend-difference"
+        style={{
+          left: position.x,
+          top: position.y,
+          transform: 'translate(-50%, -50%)'
+        }}
+      >
+        <div
+          className={`bg-white rounded-full transition-all duration-200 ${
+            isHovering ? 'w-12 h-12' : 'w-4 h-4'
+          }`}
+        />
+      </div>
+      <div
+        className="fixed pointer-events-none z-[9998] border-2 border-white rounded-full transition-all duration-300"
+        style={{
+          left: position.x,
+          top: position.y,
+          transform: 'translate(-50%, -50%)',
+          width: isHovering ? '48px' : '32px',
+          height: isHovering ? '48px' : '32px',
+        }}
+      />
+    </>
+  );
+};
+
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -51,3 +107,4 @@ const ScrollToTop = () => {
 };
 
 export default ScrollToTop;
+export { CustomCursor };

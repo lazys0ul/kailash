@@ -1,9 +1,18 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +26,17 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      {/* Cursor Glow Effect */}
+      <div 
+        className="fixed w-96 h-96 rounded-full pointer-events-none z-50 transition-all duration-300 ease-out"
+        style={{
+          left: mousePosition.x - 192,
+          top: mousePosition.y - 192,
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
+          filter: 'blur(40px)'
+        }}
+      />
       <Navbar />
       <main className="container mx-auto px-4 py-16 animate-fade-in">
         <div className="max-w-6xl mx-auto">
@@ -30,7 +49,7 @@ const Contact = () => {
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div className="bg-white rounded-lg shadow-md p-8 animate-slide-in-left">
+            <div className="bg-white rounded-lg shadow-md p-8 animate-slide-in-left hover-lift">
               <h2 className="text-2xl font-semibold text-gray-800 mb-6">Send us a Message</h2>
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -150,7 +169,7 @@ const Contact = () => {
 
             {/* Contact Information */}
             <div className="space-y-8 animate-slide-in-right">
-              <div className="bg-white rounded-lg shadow-md p-8 animate-fade-in animate-delay-100">
+              <div className="bg-white rounded-lg shadow-md p-8 animate-fade-in animate-delay-100 hover-lift">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-6">Get in Touch</h2>
                 <div className="space-y-4">
                   <div className="flex items-start animate-slide-up animate-delay-200">
@@ -196,7 +215,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-8">
+              <div className="bg-white rounded-lg shadow-md p-8 hover-lift">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Business Hours</h3>
                 <div className="space-y-2 text-gray-600">
                   <div className="flex justify-between">

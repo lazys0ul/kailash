@@ -1,9 +1,30 @@
+import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const About = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      {/* Cursor Glow Effect */}
+      <div 
+        className="fixed w-96 h-96 rounded-full pointer-events-none z-50 transition-all duration-300 ease-out"
+        style={{
+          left: mousePosition.x - 192,
+          top: mousePosition.y - 192,
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
+          filter: 'blur(40px)'
+        }}
+      />
       <Navbar />
       <main className="container mx-auto px-4 py-16 animate-fade-in">
         <div className="max-w-4xl mx-auto">
@@ -14,7 +35,7 @@ const About = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-8 mb-12 animate-slide-up animate-delay-100">
+          <div className="bg-white rounded-lg shadow-md p-8 mb-12 animate-slide-up animate-delay-100 hover-lift">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Our Story</h2>
             <p className="text-gray-600 mb-4">
               Founded in 2014, Kailash Enterprises began as a small consulting firm with a big vision: 
@@ -29,14 +50,14 @@ const About = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <div className="bg-white rounded-lg shadow-md p-8 animate-slide-in-left">
+            <div className="bg-white rounded-lg shadow-md p-8 animate-slide-in-left hover-tilt hover-lift">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">Our Mission</h3>
               <p className="text-gray-600">
                 To empower businesses with innovative, reliable, and scalable solutions that drive growth, 
                 efficiency, and competitive advantage in an ever-evolving marketplace.
               </p>
             </div>
-            <div className="bg-white rounded-lg shadow-md p-8 animate-slide-in-right">
+            <div className="bg-white rounded-lg shadow-md p-8 animate-slide-in-right hover-tilt hover-lift">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">Our Vision</h3>
               <p className="text-gray-600">
                 To be the leading provider of business solutions, recognized for our expertise, integrity, 
@@ -45,7 +66,7 @@ const About = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-8 animate-slide-up animate-delay-200">
+          <div className="bg-white rounded-lg shadow-md p-8 animate-slide-up animate-delay-200 hover-lift">
             <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">Why Choose Us?</h3>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center animate-slide-in-left">
